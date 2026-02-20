@@ -1,0 +1,31 @@
+{
+  "name": "tiendaprado",
+  "version": "1.0.0",
+  "description": "Tienda Prado Practica SSBW",
+  "homepage": "https://github.com/jorgekast18/SSBW#readme",
+  "bugs": {
+    "url": "https://github.com/jorgekast18/SSBW/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorgekast18/SSBW.git"
+  },
+  "license": "MIT",
+  "author": "Jorge A. Castaño",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.0",
+    "@types/nunjucks": "^3.2.6",
+    "chokidar": "^3.6.0"
+  }
+}
