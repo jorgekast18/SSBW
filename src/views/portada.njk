@@ -1,0 +1,53 @@
+{% extends "base.njk" %}
+
+{% block title %}Impresiones - Tienda Prado{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-6 text-uppercase">Impresiones</h1>
+</div>
+
+{% if query %}
+    <div class="mb-4">
+        <p class="text-muted">Resultados para: <strong>{{ query }}</strong></p>
+    </div>
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for card in cards %}
+    <div class="col">
+        <div class="card h-100 border-0 text-center product-card">
+            <a href="/producto/{{ card.id }}" class="text-decoration-none text-dark">
+                <div class="ratio ratio-1x1 mb-3 bg-light overflow-hidden">
+                    <img src="/public/imagenes/{{ card.imagen }}" class="card-img-top object-fit-contain p-3 transition-img" alt="{{ card.título }}">
+                </div>
+                <div class="card-body px-0">
+                    <h5 class="card-title fs-6 fw-normal mb-2">{{ card.título }}</h5>
+                    <p class="card-text fw-bold">{{ card.precio }} €</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center py-5">
+        <p class="text-muted">No se encontraron productos.</p>
+        <a href="/" class="btn btn-link">Volver a la portada</a>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .product-card {
+        transition: transform 0.3s;
+    }
+    .product-card:hover .transition-img {
+        transform: scale(1.05);
+    }
+    .transition-img {
+        transition: transform 0.5s ease;
+    }
+    .object-fit-contain {
+        object-fit: contain;
+    }
+</style>
+{% endblock %}
