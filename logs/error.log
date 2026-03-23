@@ -1,0 +1,1 @@
+{"level":"error","message":"Error en home: \nInvalid `prisma.producto.findMany()` invocation:\n\n\n","timestamp":"2026-03-20T15:19:28.338Z"}

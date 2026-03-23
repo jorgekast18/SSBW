@@ -22,11 +22,14 @@
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "nunjucks": "^3.2.4",
-    "playwright": "^1.58.2"
+    "playwright": "^1.58.2",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
     "@types/node": "^25.3.0",
     "@types/nunjucks": "^3.2.6",
     "chokidar": "^3.6.0",

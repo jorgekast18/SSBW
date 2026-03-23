@@ -6,6 +6,7 @@
     <title>{% block title %}Tienda Prado{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -64,21 +65,39 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand mx-auto d-block d-lg-none" href="/">TIENDA PRADO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-none d-lg-flex">
-                   <li class="nav-item"><a class="nav-link" href="/">IMPRESIONES</a></li>
-                </ul>
-                <a class="navbar-brand mx-auto d-none d-lg-block" href="/">TIENDA PRADO</a>
-                <form class="d-flex search-form" action="/buscar" method="GET">
-                    <input class="form-control me-2" type="search" name="busqueda" placeholder="Buscar..." aria-label="Search" value="{{ query }}">
-                </form>
+    <nav class="navbar navbar-light bg-white border-bottom pb-0">
+        <div class="container d-flex justify-content-between align-items-center pt-2 pb-3">
+            <!-- Left empty space -->
+            <div class="d-none d-lg-block" style="width: 150px;"></div>
+            
+            <!-- Center Logo -->
+            <a class="navbar-brand text-center m-0 fs-2 fw-bold" style="letter-spacing: 4px;" href="/">TIENDA PRADO</a>
+            
+            <!-- Right Icons -->
+            <div class="d-flex justify-content-end align-items-center" style="width: 200px;">
+                <a href="#" class="text-dark me-3"><i class="bi bi-search fs-5"></i></a>
+                <a href="#" class="text-dark me-3"><i class="bi bi-person fs-5"></i></a>
+                <a href="#cartOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="cartOffcanvas" class="text-dark position-relative">
+                    <i class="bi bi-handbag fs-5"></i>
+                    {% if total_carrito > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.6rem;">
+                        {{ total_carrito }}
+                    </span>
+                    {% endif %}
+                </a>
+                <span class="ms-4 small text-muted d-none d-md-inline" style="font-size: 0.75rem;">ES | EN</span>
             </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="container d-none d-lg-flex justify-content-center py-2">
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link text-muted" style="font-size: 0.75rem; letter-spacing: 1px;" href="/">LIBROS</a></li>
+                <li class="nav-item"><a class="nav-link text-muted" style="font-size: 0.75rem; letter-spacing: 1px;" href="/">EXPOSICIONES</a></li>
+                <li class="nav-item"><a class="nav-link text-muted" style="font-size: 0.75rem; letter-spacing: 1px;" href="/">COLECCIONES</a></li>
+                <li class="nav-item"><a class="nav-link text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 1px;" href="/">IMPRESIONES</a></li>
+                <li class="nav-item"><a class="nav-link text-muted" style="font-size: 0.75rem; letter-spacing: 1px;" href="/">REGALOS</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -88,9 +107,56 @@
 
     <footer class="footer">
         <div class="container text-center">
-            <p>&copy; 2024 TIENDA PRADO - Misión Académica SSBW</p>
+            <p>&copy; 2026 TIENDA PRADO - Práctica UGR SSBW</p>
         </div>
     </footer>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-normal" id="cartOffcanvasLabel" style="font-family: 'Playfair Display', serif; letter-spacing: 1px;">Cesta</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        {% if carrito_items and carrito_items.length > 0 %}
+            <div class="flex-grow-1 overflow-auto">
+                {% for item in carrito_items %}
+                <div class="d-flex mb-4 align-items-center">
+                    <img src="/public/imagenes/{{ item.producto.imagen }}" class="border bg-light me-3 object-fit-contain p-2" style="width: 80px; height: 100px;" alt="{{ item.producto.título }}">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1 fw-normal" style="font-size: 0.95rem;">{{ item.producto.título }}</h6>
+                        <div class="text-muted small mb-2">Cant: {{ item.cantidad }}</div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold" style="font-size: 0.9rem;">{{ item.producto.precio }} €</span>
+                            <!-- Placeholder bin icon for delete later -->
+                            <i class="bi bi-trash3 text-muted" style="cursor: pointer;"></i>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-auto border-top pt-4">
+                <div class="d-flex justify-content-between mb-2 small text-muted">
+                    <span>{{ total_carrito }} artículo(s)</span>
+                    <span>{{ carrito_total_precio.toFixed(2) }} €</span>
+                </div>
+                <div class="d-flex justify-content-between mb-4 fs-5" style="font-family: 'Playfair Display', serif;">
+                    <span>Total</span>
+                    <span>{{ carrito_total_precio.toFixed(2) }} €</span>
+                </div>
+                <button class="btn btn-prado w-100 mb-2 py-3" style="background-color: #7a7a7a; color: white;">Finalizar pedido</button>
+                <button class="btn w-100 py-3 text-dark mb-4" style="border: 1px solid #ddd; border-radius: 0;">Ver Cesta</button>
+            </div>
+        {% else %}
+            <div class="text-center mt-5 text-muted">
+                <i class="bi bi-handbag fs-1 mb-3 d-block"></i>
+                <p>Tu cesta está vacía</p>
+                <button class="btn btn-prado mt-4 px-4 py-2" data-bs-dismiss="offcanvas">Seguir comprando</button>
+            </div>
+        {% endif %}
+      </div>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
