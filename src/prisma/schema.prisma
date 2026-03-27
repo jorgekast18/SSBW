@@ -20,3 +20,10 @@ model Producto {
   precio      Decimal
   imagen      String  @db.Char(127)
 }
+
+model Usuario {
+  email      String  @id @db.Char(127)
+  nombre     String  @db.Char(127)
+  contraseña String  @db.Text
+  admin      Boolean @default(false)
+}

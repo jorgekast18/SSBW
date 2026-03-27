@@ -1,0 +1,33 @@
+### List all products
+GET http://localhost:3000/api/productos
+
+### List products with pagination and sorting
+GET http://localhost:3000/api/productos?desde=1&hasta=5&ordenación=descendente
+
+### Get specific product
+GET http://localhost:3000/api/productos/1
+
+### Create new product
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "título": "Nuevo Producto de Prueba",
+  "descripción": "Una descripción de prueba",
+  "precio": 99.99,
+  "imagen": "default.jpg"
+}
+
+### Update product
+PUT http://localhost:3000/api/productos/1
+Content-Type: application/json
+
+{
+  "título": "Título Editado",
+  "descripción": "Descripción Editada",
+  "precio": 105.00,
+  "imagen": "default2.jpg"
+}
+
+### Delete product
+DELETE http://localhost:3000/api/productos/1

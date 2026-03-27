@@ -1,14 +1,27 @@
-import express from 'express'
-import session from 'express-session'
-import nunjucks from 'nunjucks'
-import ProductosRouter from "./routes/productos.ts"
-import logger from "./logger.ts"
-import prisma from "./prisma/prisma.client.ts"
+import express from 'express';
+import session from 'express-session';
+import nunjucks from 'nunjucks';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
+import ProductosRouter from "./routes/productos.ts";
+import UsuariosRouter from "./routes/usuarios.ts";
+import ApiRouter from "./routes/api.ts";
+import logger from "./logger.ts";
+import prisma from "./prisma/prisma.client.ts";
 
 declare module 'express-session' {
   interface SessionData {
     carrito: { id: number, cantidad: number }[];
     total_carrito: number;
+  }
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      usuario?: string;
+      admin?: boolean;
+    }
   }
 }
 
@@ -33,6 +46,28 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+app.use(cookieParser())
+
+app.use((req, res, next) => {
+  const token = req.cookies.access_token;
+  if (token) {
+     try {
+       const data = jwt.verify(token, process.env.SECRET_KEY || 'tiendaprado_secret') as any;
+       req.usuario = data.usuario;
+       req.admin = data.admin;
+       app.locals.usuario = data.usuario;
+       app.locals.admin = data.admin;
+     } catch(e) {
+       app.locals.usuario = undefined;
+       app.locals.admin = undefined;
+     }
+  } else {
+     app.locals.usuario = undefined;
+     app.locals.admin = undefined;
+  }
+  next()
+})
 
 // Global middleware to pass cart state to all views
 app.use(async (req, res, next) => {
@@ -68,8 +103,14 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Auth router
+app.use('/', UsuariosRouter);
+
+// API router
+app.use('/api', ApiRouter);
+
 // Product router
-app.use('/', ProductosRouter)
+app.use('/', ProductosRouter);
 
 app.listen(port, () => {
   logger.info(`Server running at http://localhost:${port}`)

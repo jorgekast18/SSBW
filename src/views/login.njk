@@ -1,0 +1,39 @@
+{% extends "base.njk" %}
+
+{% block title %}Iniciar sesión - Tienda Prado{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <h4 class="mb-4" style="font-family: 'Playfair Display', serif; color: var(--prado-accent);">Inicia sesión con tu cuenta</h4>
+        
+        <div class="card border-0 rounded-0" style="border: 1px solid #eaeaea !important; padding: 3rem;">
+            <form action="/login" method="post">
+                {% if error %}
+                <div class="alert alert-danger rounded-0 small" role="alert">
+                    Credenciales incorrectas. Por favor, inténtalo de nuevo.
+                </div>
+                {% endif %}
+
+                <div class="mb-4 text-start">
+                    <label for="email" class="form-label text-muted small px-2">Correo electrónico</label>
+                    <input type="email" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="email" name="email" required style="font-size: 0.9rem;" placeholder="correo electrónico" />
+                </div>
+                
+                <div class="mb-5 text-start position-relative">
+                    <label for="contraseña" class="form-label text-muted small px-2">Contraseña</label>
+                    <input type="password" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="contraseña" name="contraseña" required style="font-size: 0.9rem;" placeholder="contraseña" />
+                    <i class="bi bi-eye-slash position-absolute" style="right: 15px; bottom: 10px; cursor: pointer; color: var(--prado-accent);"></i>
+                </div>
+
+                <div class="text-center d-grid gap-2 col-8 mx-auto position-relative" style="top: 2rem; margin-bottom: 2rem;">
+                    <button type="submit" class="btn btn-prado w-100 py-3 mt-4" style="background-color: #6c757d;">Iniciar sesión</button>
+                    <p class="mt-4 text-center">
+                        <a href="#" class="text-dark text-decoration-none" style="font-size: 1rem;"><span style="color: grey;">¿No tienes una cuenta?</span> Créala aquí <i class="bi bi-chevron-right small"></i></a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,3 +2,6 @@
 {"level":"error","message":"Error en home: \nInvalid `prisma.producto.findMany()` invocation:\n\n\n","timestamp":"2026-03-20T15:19:28.338Z"}
 {"level":"info","message":"Server running at http://localhost:3000","timestamp":"2026-03-20T15:36:50.752Z"}
 {"level":"info","message":"Server running at http://localhost:3000","timestamp":"2026-03-20T15:44:52.492Z"}
+{"level":"info","message":"Server running at http://localhost:3000","timestamp":"2026-03-27T15:46:42.655Z"}
+{"level":"info","message":"Server running at http://localhost:3000","timestamp":"2026-03-27T15:46:52.348Z"}
+{"level":"info","message":"Server running at http://localhost:3000","timestamp":"2026-03-27T16:00:30.089Z"}
