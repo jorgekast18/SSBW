@@ -14,10 +14,10 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { email, contraseña } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const usuario = await prisma.usuario.autentifica(email, contraseña);
+    const usuario = await prisma.usuario.autentifica(email, password);
     const token = jwt.sign(
       { usuario: usuario.nombre, admin: usuario.admin },
       SECRET_KEY,
